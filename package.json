@@ -1,0 +1,28 @@
+{
+  "name": "parse-server-urban-airship",
+  "version": "0.0.1",
+  "description": "Urban Airship push adapter for parse-server",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/istanbul cover -x **/spec/** ./node_modules/.bin/jasmine && ./node_modules/.bin/codecov"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flovilmart/parse-server-urban-airship.git"
+  },
+  "author": "Florent Vilmart",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/flovilmart/parse-server-urban-airship/issues"
+  },
+  "homepage": "https://github.com/flovilmart/parse-server-urban-airship#readme",
+  "dependencies": {
+    "parse": "^1.7.0",
+    "urban-airship-push": "^0.1.0"
+  },
+  "devDependencies": {
+    "codecov": "^1.0.1",
+    "istanbul": "^0.4.2",
+    "jasmine": "^2.4.1"
+  }
+}
