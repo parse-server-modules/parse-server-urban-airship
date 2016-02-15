@@ -1,7 +1,5 @@
 "use strict";
-// ParsePushAdapter is the default implementation of
-// PushAdapter, it uses GCM for android push and APNS
-// for ios push.
+// UrbanAirshipPushAdapter is an adapter for Parse Server push
 
 const typeToAudience = {
   "ios": "device_token",
@@ -12,13 +10,11 @@ const typeToAudience = {
 }
 
 const Parse = require('parse/node').Parse;
-var UrbanAirshipPush = require('urban-airship-push');
+const UrbanAirshipPush = require('urban-airship-push');
 
 function UrbanAirshipPushAdapter(pushConfig) {
-  this.https = require('https');
 
   this.validPushTypes = ['ios', 'android',  'winrt', 'winphone', 'dotnet'];
-  this.senderMap = {};
 
   pushConfig = pushConfig || {};
   this.config = {};
