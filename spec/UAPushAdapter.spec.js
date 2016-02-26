@@ -1,3 +1,5 @@
+require('../parse-server/spec/PushController.spec')
+
 var UAPushAdapter = require('../index');
 
 var pushConfig = {
