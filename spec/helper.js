@@ -1,0 +1,1 @@
+require("../parse-server/spec/helper");
