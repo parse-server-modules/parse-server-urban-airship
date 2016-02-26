@@ -1,5 +1,4 @@
-require('../parse-server/spec/PushController.spec')
-
+var PushController = require('../parse-server/src/Controllers/PushController').PushController;
 var UAPushAdapter = require('../index');
 
 var pushConfig = {
@@ -9,6 +8,22 @@ var pushConfig = {
 };
 
 describe('UAPushAdapter', () => {
+  
+  beforeEach(() => {
+    setServerConfiguration({
+      serverURL: 'http://localhost:8378/1',
+      appId: 'test',
+      javascriptKey: 'test',
+      dotNetKey: 'windows',
+      clientKey: 'client',
+      restAPIKey: 'rest',
+      masterKey: 'test',
+      push: new UAPushAdapter(pushConfig)
+    });
+  })
+  
+  require('../parse-server/spec/PushController.spec')
+  
   it('can be initialized', (done) => {
 
     var adapter = new UAPushAdapter(pushConfig);
@@ -16,7 +31,14 @@ describe('UAPushAdapter', () => {
     expect(adapter.getValidPushTypes()).toEqual(['ios', 'android', 'winrt', 'winphone', 'dotnet']);
     done();
   });
-
+  
+  it('can create a push controller', (done) => {
+     expect( () => {
+      new PushController(new UAPushAdapter(pushConfig)); 
+     }).not.toThrow();
+     done();
+  });
+  
   it('can generate requests', (done) => {
     // Mock installations
     var installations = [
