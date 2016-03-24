@@ -9,7 +9,6 @@ const typeToAudience = {
   "dotnet": "wns"
 }
 
-const Parse = require('parse/node').Parse;
 const UrbanAirshipPush = require('urban-airship-push');
 
 function UrbanAirshipPushAdapter(pushConfig) {
@@ -35,15 +34,15 @@ UrbanAirshipPushAdapter.prototype.getValidPushTypes = function() {
 
 UrbanAirshipPushAdapter.prototype.send = function(data, installations) {
   const requests = UrbanAirshipPushAdapter.createRequests(data, installations);
-  const promise = new Parse.Promise();
-  this.UA.push.send(requests, function(err, res){
-    if (err) {
-      promise.reject(err);
-    } else {
-      promise.resolve(res);
-    }
+  return new Promise((resolve, reject) => {
+    this.UA.push.send(requests, function(err, res){
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
   });
-  return promise;
 }
 
 UrbanAirshipPushAdapter.createRequests = function(data, installations) {
