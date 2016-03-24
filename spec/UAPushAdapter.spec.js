@@ -1,29 +1,13 @@
-var PushController = require('../parse-server/src/Controllers/PushController').PushController;
 var UAPushAdapter = require('../index');
 
 var pushConfig = {
-  key: "aKey",
-  secret:"aSecret",
-  masterSecret: "aMasterSecret"
+  key: process.env.UA_KEY,
+  secret: process.env.UA_SECRET,
+  masterSecret: process.env.UA_MASTER_SECRET
 };
 
 describe('UAPushAdapter', () => {
-  
-  beforeEach(() => {
-    setServerConfiguration({
-      serverURL: 'http://localhost:8378/1',
-      appId: 'test',
-      javascriptKey: 'test',
-      dotNetKey: 'windows',
-      clientKey: 'client',
-      restAPIKey: 'rest',
-      masterKey: 'test',
-      push: new UAPushAdapter(pushConfig)
-    });
-  })
-  
-  require('../parse-server/spec/PushController.spec')
-  
+
   it('can be initialized', (done) => {
 
     var adapter = new UAPushAdapter(pushConfig);
@@ -31,14 +15,7 @@ describe('UAPushAdapter', () => {
     expect(adapter.getValidPushTypes()).toEqual(['ios', 'android', 'winrt', 'winphone', 'dotnet']);
     done();
   });
-  
-  it('can create a push controller', (done) => {
-     expect( () => {
-      new PushController(new UAPushAdapter(pushConfig)); 
-     }).not.toThrow();
-     done();
-  });
-  
+
   it('can generate requests', (done) => {
     // Mock installations
     var installations = [
@@ -51,7 +28,7 @@ describe('UAPushAdapter', () => {
         deviceToken: 'iosToken'
       },
       {
-        // Invalid 
+        // Invalid
         deviceType: 'win',
         deviceToken: 'winToken'
       },
@@ -66,7 +43,7 @@ describe('UAPushAdapter', () => {
     expect(requests.length).toBe(2);
     done();
   });
-  
+
   it('fails to generate requests with empty', (done) => {
     // Mock installations
     var installations = [
@@ -79,7 +56,7 @@ describe('UAPushAdapter', () => {
         deviceToken: 'iosToken'
       },
       {
-        // Invalid 
+        // Invalid
         deviceType: 'win',
         deviceToken: 'winToken'
       },
@@ -98,7 +75,7 @@ describe('UAPushAdapter', () => {
   it("can post the correct data", (done) => {
 
     var adapter = new UAPushAdapter(pushConfig)
-    
+
     var installations = [
       {
         deviceType: 'android',
@@ -117,14 +94,14 @@ describe('UAPushAdapter', () => {
         deviceToken: undefined
       }
     ];
-    
+
     var data = {'data':{
   		'title': 'Example title',
   		'alert': 'Example content',
   		'content-available':1,
   		'misc-data': 'Example Data'
   	}}
-    
+
     adapter.send(data, installations).then(function(res){
       fail('Should not succeed');
       done();

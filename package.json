@@ -4,20 +4,18 @@
   "description": "Urban Airship push adapter for parse-server",
   "main": "index.js",
   "scripts": {
-    "pretest": "MONGODB_VERSION=${MONGODB_VERSION:=3.0.8} ./parse-server/node_modules/.bin/mongodb-runner start",
-    "test": "TESTING=1 ./parse-server/node_modules/.bin/babel-node ./node_modules/jasmine/bin/jasmine.js && codecov",
-    "posttest": "./parse-server/node_modules/.bin/mongodb-runner stop"
+    "test": "istanbul cover -x **/spec/** jasmine --captureExceptions"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/flovilmart/parse-server-urban-airship.git"
+    "url": "git+https://github.com/parse-server-modules/parse-server-urban-airship.git"
   },
   "author": "Florent Vilmart",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/flovilmart/parse-server-urban-airship/issues"
+    "url": "https://github.com/parse-server-modules/parse-server-urban-airship/issues"
   },
-  "homepage": "https://github.com/flovilmart/parse-server-urban-airship#readme",
+  "homepage": "https://github.com/parse-server-modules/parse-server-urban-airship#readme",
   "dependencies": {
     "parse": "^1.7.0",
     "urban-airship-push": "^0.1.0"
